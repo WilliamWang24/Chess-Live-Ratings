@@ -1,5 +1,4 @@
 import SwiftUI
-import SwiftUICharts
 
 struct ContentView: View {
     var classicalData = dataReturn(leaderNames: [""], classicalList: [""], rapidList: [""], blitzList: [""], upAndDown: [""], countries: [""])
@@ -13,7 +12,6 @@ struct ContentView: View {
         blitzData = Scraping.blitzScraping()
         juniorData = Scraping.juniorScraping()
     }
-    @State var showInfoModalView: Bool = false
     @State var timeFormat = 0
     @State var isShowingSheet = false
 
@@ -108,64 +106,35 @@ struct ContentView: View {
                       
                 if (timeFormat == 0) {
                     ForEach(0..<classicalData.leaderNames.count) { i in
-                    Button(action: {
-                      showInfoModalView = true
-                    }, label: {
+                
                         card(name: classicalData.leaderNames[i], primaryRating: classicalData.classicalList[i], secondaryRating: classicalData.rapidList[i], tertiaryRating: classicalData.blitzList[i], rank: i, upAnDown: classicalData.upAndDown[i], countries: classicalData.countries[i], whichFormat: 0)
-                    }).foregroundColor(.black)
-                      .sheet(isPresented: $showInfoModalView) {
-                          NavigationView {
-                              modal(name: classicalData.leaderNames[i])
-                          }
-                      }
+                    
                         Spacer(minLength: 20)
                     }
                 }
                 
                 else if (timeFormat == 1) {
                     ForEach(0..<rapidData.leaderNames.count) { i in
-                    Button(action: {
-                      showInfoModalView = true
-                    }, label: {
+                    
                         card(name: rapidData.leaderNames[i], primaryRating: rapidData.rapidList[i], secondaryRating: rapidData.blitzList[i], tertiaryRating: rapidData.classicalList[i], rank: i, upAnDown: rapidData.upAndDown[i], countries: rapidData.countries[i], whichFormat: 1)
-                    }).foregroundColor(.black)
-                      .sheet(isPresented: $showInfoModalView) {
-                          NavigationView {
-                              modal(name: classicalData.leaderNames[i])
-                          }
-                      }
                         Spacer(minLength: 20)
                     }
                 }
                 
                 else if (timeFormat == 2) {
                     ForEach(0..<blitzData.leaderNames.count) { i in
-                    Button(action: {
-                      showInfoModalView = true
-                    }, label: {
+             
                         card(name: blitzData.leaderNames[i], primaryRating: blitzData.blitzList[i], secondaryRating: blitzData.rapidList[i], tertiaryRating: blitzData.classicalList[i], rank: i, upAnDown: blitzData.upAndDown[i], countries: blitzData.countries[i], whichFormat: 2)
-                    }).foregroundColor(.black)
-                      .sheet(isPresented: $showInfoModalView) {
-                          NavigationView {
-                              modal(name: classicalData.leaderNames[i])
-                          }
-                      }
+                   
                         Spacer(minLength: 20)
                     }
                 }
                 
                 else {
                     ForEach(0..<juniorData.leaderNames.count) { i in
-                    Button(action: {
-                      showInfoModalView = true
-                    }, label: {
+                
                         card(name: juniorData.leaderNames[i], primaryRating: juniorData.classicalList[i], secondaryRating: juniorData.rapidList[i], tertiaryRating: juniorData.blitzList[i], rank: i, upAnDown: juniorData.upAndDown[i], countries: juniorData.countries[i], whichFormat: 3)
-                    }).foregroundColor(.black)
-                      .sheet(isPresented: $showInfoModalView) {
-                          NavigationView {
-                              modal(name: classicalData.leaderNames[i])
-                          }
-                      }
+               
                         Spacer(minLength: 20)
                     }
                 }
@@ -276,18 +245,3 @@ struct card: View {
     }
 }
 
-struct modal: View {
-    var demoData: [Double] = [8, 2, 4, 6, 12, 9, 2]
-    var name: String
-    var body: some View {
-        ZStack {
-            Color.dropShadow.ignoresSafeArea()
-            VStack {
-                LineView(data: [2783.6,2783.0,2813.3,2637.2,2737.9, 2783.2,2783.3,2813.4,2637.7,2738.8], style: ChartStyle(backgroundColor: .dropShadow, accentColor: .black, gradientColor: GradientColors.bluPurpl, textColor: .black, legendTextColor: .black, dropShadowColor: .black))
-                    .padding()
-                
-
-            }.navigationTitle(name)
-        }
-    }
-}
